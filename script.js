@@ -23,32 +23,27 @@ function showSuccess(input) {
   const formControl = input.parentElement;
   formControl.className = "form-control success";
 }
+
+// Check required fields
+function checkRequired(inputArr) {
+  inputArr.forEach(function (input) {
+    console.log(input.id);
+    if (input.value.trim() === "") {
+      showErrow(input, `${capitalizeFirst(input)} is required!`);
+    } else {
+      showSuccess(input);
+    }
+  });
+}
+
+// Capitalize the first letter
+function capitalizeFirst(input) {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
 //Event Listeners
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  if (username.value === "") {
-    showErrow(username, "Username is required!");
-  } else {
-    showSuccess(username);
-  }
 
-  if (email.value === "") {
-    showErrow(email, "Email is required!");
-  } else if (!isValidEmail(email.value)) {
-    showErrow(email, "Email is not valid");
-  } else {
-    showSuccess(email);
-  }
-
-  if (password.value === "") {
-    showErrow(password, "password is required!");
-  } else {
-    showSuccess(password);
-  }
-
-  if (password2.value === "") {
-    showErrow(password2, "password2 is required!");
-  } else {
-    showSuccess(password2);
-  }
+  checkRequired([username, email, password, password2]);
 });
